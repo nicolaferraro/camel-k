@@ -18,13 +18,8 @@ limitations under the License.
 package cmd
 
 import (
-	"encoding/json"
 	"fmt"
-	"github.com/operator-framework/operator-sdk/pkg/util/k8sutil"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"k8s.io/apimachinery/pkg/apis/meta/v1/unstructured"
-	"k8s.io/apimachinery/pkg/runtime"
 	"net/http"
 	"os"
 	"os/signal"
@@ -336,19 +331,15 @@ func (o *runCmdOptions) updateIntegrationCode(filename string) (*v1alpha1.Integr
 	case "":
 		// continue..
 	case "yaml":
-		jsondata, err := toJson(&integration)
+		data, err := kubernetes.SerializeToYAML(&integration)
 		if err != nil {
 			return nil, err
 		}
-		yamldata, err := jsonToYaml(jsondata)
-		if err != nil {
-			return nil, err
-		}
-		fmt.Print(string(yamldata))
+		fmt.Print(string(data))
 		return nil, nil
 
 	case "json":
-		data, err := toJson(&integration)
+		data, err := kubernetes.SerializeToJSON(&integration)
 		if err != nil {
 			return nil, err
 		}
@@ -382,33 +373,6 @@ func (o *runCmdOptions) updateIntegrationCode(filename string) (*v1alpha1.Integr
 		fmt.Printf("integration \"%s\" updated\n", name)
 	}
 	return &integration, nil
-}
-
-func toJson(value runtime.Object) ([]byte, error) {
-	u, err := k8sutil.UnstructuredFromRuntimeObject(value)
-	if err != nil {
-		return nil, fmt.Errorf("error creating unstructured data: %v", err)
-		return nil, err
-	}
-	data, err := runtime.Encode(unstructured.UnstructuredJSONScheme, u)
-	if err != nil {
-		return nil, fmt.Errorf("error marshalling to json: %v", err)
-		return nil, err
-	}
-	return data, nil
-}
-
-func jsonToYaml(src []byte) ([]byte, error) {
-	jsondata := map[string]interface{}{}
-	err := json.Unmarshal(src, &jsondata)
-	if err != nil {
-		return nil, fmt.Errorf("error unmarshalling json: %v", err)
-	}
-	yamldata, err := yaml.Marshal(&jsondata)
-	if err != nil {
-		return nil, fmt.Errorf("error marshalling to yaml: %v", err)
-	}
-	return yamldata, nil
 }
 
 func (*runCmdOptions) loadCode(fileName string) (string, error) {

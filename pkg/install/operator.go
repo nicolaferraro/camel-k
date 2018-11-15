@@ -30,18 +30,23 @@ import (
 	"time"
 )
 
-// Operator --
+// Operator installs the operator resources in the given namespace
 func Operator(namespace string) error {
+	return OperatorOrCollect(namespace, nil)
+}
+
+// OperatorOrCollect installs the operator resources or adds them to the collector if present
+func OperatorOrCollect(namespace string, collection *kubernetes.Collection) error {
 	isOpenshift, err := openshift.IsOpenShift()
 	if err != nil {
 		return err
 	}
 	if isOpenshift {
-		if err := installOpenshift(namespace); err != nil {
+		if err := installOpenshift(namespace, collection); err != nil {
 			return err
 		}
 	} else {
-		if err := installKubernetes(namespace); err != nil {
+		if err := installKubernetes(namespace, collection); err != nil {
 			return err
 		}
 	}
@@ -51,13 +56,13 @@ func Operator(namespace string) error {
 		return err
 	}
 	if isKnative {
-		return installKnative(namespace)
+		return installKnative(namespace, collection)
 	}
 	return nil
 }
 
-func installOpenshift(namespace string) error {
-	return Resources(namespace,
+func installOpenshift(namespace string, collection *kubernetes.Collection) error {
+	return ResourcesOrCollect(namespace, collection,
 		"operator-service-account.yaml",
 		"operator-role-openshift.yaml",
 		"operator-role-binding.yaml",
@@ -66,8 +71,8 @@ func installOpenshift(namespace string) error {
 	)
 }
 
-func installKubernetes(namespace string) error {
-	return Resources(namespace,
+func installKubernetes(namespace string, collection *kubernetes.Collection) error {
+	return ResourcesOrCollect(namespace, collection,
 		"operator-service-account.yaml",
 		"operator-role-kubernetes.yaml",
 		"operator-role-binding.yaml",
@@ -77,8 +82,8 @@ func installKubernetes(namespace string) error {
 	)
 }
 
-func installKnative(namespace string) error {
-	return Resources(namespace,
+func installKnative(namespace string, collection *kubernetes.Collection) error {
+	return ResourcesOrCollect(namespace, collection,
 		"operator-role-knative.yaml",
 		"operator-role-binding-knative.yaml",
 	)
@@ -86,6 +91,11 @@ func installKnative(namespace string) error {
 
 // Platform installs the platform custom resource
 func Platform(namespace string, registry string) error {
+	return PlatformOrCollect(namespace, registry, nil)
+}
+
+// PlatformOrCollect --
+func PlatformOrCollect(namespace string, registry string, collection *kubernetes.Collection) error {
 	if err := waitForPlatformCRDAvailable(namespace, 15*time.Second); err != nil {
 		return err
 	}
@@ -124,7 +134,7 @@ func Platform(namespace string, registry string) error {
 		pl.Spec.Profile = v1alpha1.TraitProfileKnative
 	}
 
-	return RuntimeObject(namespace, pl)
+	return RuntimeObjectOrCollect(namespace, collection, pl)
 }
 
 func waitForPlatformCRDAvailable(namespace string, timeout time.Duration) error {
@@ -143,7 +153,12 @@ func waitForPlatformCRDAvailable(namespace string, timeout time.Duration) error 
 
 // Example --
 func Example(namespace string) error {
-	return Resources(namespace,
+	return ExampleOrCollect(namespace, nil)
+}
+
+// ExampleOrCollect --
+func ExampleOrCollect(namespace string, collection *kubernetes.Collection) error {
+	return ResourcesOrCollect(namespace, collection,
 		"cr-example.yaml",
 	)
 }
