@@ -63,7 +63,7 @@ func newCmdInstall(rootCmdOptions *RootCmdOptions) *cobra.Command {
 	cmd.Flags().StringVar(&impl.registry.Secret, "registry-secret", "", "A secret used to push/pull images to the Docker registry")
 	cmd.Flags().BoolVar(&impl.registry.Insecure, "registry-insecure", false, "Configure to configure registry access in insecure mode or not")
 	cmd.Flags().StringSliceVar(&impl.repositories, "repository", nil, "Add a maven repository")
-	cmd.Flags().BoolVar(&impl.snapshotRepositories, "snapshot-repositories", false, "Automatically include known snapshot repositories")
+	cmd.Flags().BoolVar(&impl.snapshotRepositories, "snapshot-repositories", true, "Automatically include known snapshot repositories")
 	cmd.Flags().StringVar(&impl.localRepository, "local-repository", "", "Location of the local maven repository")
 	cmd.Flags().StringSliceVarP(&impl.properties, "property", "p", nil, "Add a camel property")
 	cmd.Flags().StringVar(&impl.camelVersion, "camel-version", "", "Set the camel version")
