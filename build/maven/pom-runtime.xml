@@ -30,6 +30,16 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.camel.k</groupId>
+            <artifactId>camel-k-adapter-camel-2</artifactId>
+            <version>${runtime.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.k</groupId>
+            <artifactId>camel-k-adapter-camel-3</artifactId>
+            <version>${runtime.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.camel.k</groupId>
             <artifactId>camel-k-maven-plugin</artifactId>
             <version>${runtime.version}</version>
         </dependency>

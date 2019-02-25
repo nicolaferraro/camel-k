@@ -1,6 +1,6 @@
 VERSIONFILE := pkg/util/defaults/defaults.go
 VERSION := 0.3.2-SNAPSHOT
-RUNTIME_VERSION := 0.3.1
+RUNTIME_VERSION := 0.3.2-SNAPSHOT
 CAMEL_VERSION := 2.23.1
 CAMEL_VERSION_CONSTRAINT := ~2.23.x
 BASE_IMAGE := fabric8/s2i-java:3.0-java8
@@ -61,6 +61,7 @@ build-publisher:
 build-resources:
 	./script/build_catalog.sh $(CAMEL_VERSION) $(RUNTIME_VERSION)
 	./script/build_catalog.sh 2.23.0 $(RUNTIME_VERSION)
+	./script/build_catalog.sh 3.0.0-M1 $(RUNTIME_VERSION)
 	./script/embed_resources.sh deploy
 	go run cmd/util/json-schema-gen/jsonschemagen.go --out=./assets/json-schema
 

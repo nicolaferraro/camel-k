@@ -19,6 +19,7 @@ package builder
 
 import (
 	"errors"
+	"strings"
 	"sync"
 	"testing"
 
@@ -131,6 +132,15 @@ func TestGenerateJvmProject(t *testing.T) {
 		Version:    defaults.RuntimeVersion,
 		Type:       "jar",
 	})
+	assert.Condition(t, func() bool {
+		for _, d := range ctx.Project.Dependencies {
+			if d.GroupID == "org.apache.camel.k" && strings.HasPrefix(d.ArtifactID, "camel-k-adapter-") {
+				return true
+			}
+		}
+
+		return false
+	})
 	assert.Contains(t, ctx.Project.Dependencies, maven.Dependency{
 		GroupID:    "org.apache.camel",
 		ArtifactID: "camel-core",
@@ -180,6 +190,15 @@ func TestGenerateGroovyProject(t *testing.T) {
 		ArtifactID: "camel-k-runtime-jvm",
 		Version:    defaults.RuntimeVersion,
 		Type:       "jar",
+	})
+	assert.Condition(t, func() bool {
+		for _, d := range ctx.Project.Dependencies {
+			if d.GroupID == "org.apache.camel.k" && strings.HasPrefix(d.ArtifactID, "camel-k-adapter-") {
+				return true
+			}
+		}
+
+		return false
 	})
 	assert.Contains(t, ctx.Project.Dependencies, maven.Dependency{
 		GroupID:    "org.apache.camel.k",
