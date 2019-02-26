@@ -54,6 +54,17 @@
     </build>
 
     <repositories>
+         <repository>
+            <id>apache.staging</id>
+            <name>Apache Staging Repository</name>
+            <url>https://repository.apache.org/content/repositories/orgapachecamel-1122</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
         <repository>
             <id>apache.snapshots</id>
             <name>Apache Development Snapshot Repository</name>
@@ -76,8 +87,18 @@
             </snapshots>
         </repository>
     </repositories>
-
     <pluginRepositories>
+         <pluginRepository>
+            <id>apache.staging</id>
+            <name>Apache Staging Repository</name>
+            <url>https://repository.apache.org/content/repositories/orgapachecamel-1122</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
         <pluginRepository>
             <id>apache.snapshots</id>
             <name>Apache Development Snapshot Repository</name>
