@@ -1,11 +1,11 @@
 VERSIONFILE := pkg/util/defaults/defaults.go
 VERSION := 0.3.2-SNAPSHOT
 RUNTIME_VERSION := 0.3.2-SNAPSHOT
-CAMEL_VERSION := 2.23.1
-CAMEL_VERSION_CONSTRAINT := ~2.23.x
+CAMEL_VERSION := 3.0.0-M1
+CAMEL_VERSION_CONSTRAINT := 3.0.0-M1
 BASE_IMAGE := fabric8/s2i-java:3.0-java8
 LOCAL_REPOSITORY := /tmp/artifacts/m2
-IMAGE_NAME := docker.io/apache/camel-k
+IMAGE_NAME := quay.io/lburgazzoli/camel-k
 RELEASE_GIT_REMOTE := upstream
 
 default: test
@@ -89,23 +89,27 @@ lint:
 
 images: test
 	mkdir -p build/_maven_output
-	operator-sdk build $(IMAGE_NAME):$(VERSION)
+	operator-sdk build $(IMAGE_NAME):latest
 
 images-dev: test package-artifacts
 	mkdir -p build/_maven_output
-	operator-sdk build $(IMAGE_NAME):$(VERSION)
+	operator-sdk build $(IMAGE_NAME):latest
 
 images-push:
+<<<<<<< HEAD
 	docker push $(IMAGE_NAME):$(VERSION)
+=======
+ 	docker push $(IMAGE_NAME)::latest
+>>>>>>> summit fixes
 
 set-version:
 	./script/set_version.sh $(VERSION)
 
-git-tag:
-	./script/git_tag.sh $(VERSION) $(RELEASE_GIT_REMOTE)
+#git-tag:
+#	./script/git_tag.sh $(VERSION) $(RELEASE_GIT_REMOTE)
 
-cross-compile:
-	./script/cross_compile.sh $(VERSION)
+#cross-compile:
+#	./script/cross_compile.sh $(VERSION)
 
 package-examples:
 	./script/package_examples.sh $(VERSION)
@@ -113,14 +117,18 @@ package-examples:
 package-artifacts:
 	./script/package_maven_artifacts.sh $(RUNTIME_VERSION)
 
-publish-base-images:
-	go run cmd/util/publisher/publisher.go --runtime-version=$(RUNTIME_VERSION)
+#publish-base-images:
+#	go run cmd/util/publisher/publisher.go --runtime-version=$(RUNTIME_VERSION)
 
+<<<<<<< HEAD
 release: clean codegen set-version build-resources build images images-push cross-compile package-examples git-tag
+=======
+#release: clean build images images-push cross-compile package-examples git-tag
+>>>>>>> summit fixes
 
-install-minishift:
-	./script/install_minishift.sh
-install-minikube:
-	./script/install_minikube.sh
+#install-minishift:
+#	./script/install_minishift.sh
+#install-minikube:
+#	./script/install_minikube.sh
 
 .PHONY: build build-operator build-kamel build-resources dep codegen images images-dec images-push test check test-integration clean release cross-compile package-examples set-version git-tag publish-base-images 

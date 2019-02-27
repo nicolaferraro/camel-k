@@ -6375,7 +6375,7 @@ spec:
       serviceAccountName: camel-k-operator
       containers:
         - name: camel-k-operator
-          image: docker.io/apache/camel-k:0.3.2-SNAPSHOT
+          image: quay.io/lburgazzoli/camel-k:latest
           command:
           - camel-k
           imagePullPolicy: IfNotPresent
@@ -6435,7 +6435,7 @@ spec:
       serviceAccountName: camel-k-operator
       containers:
         - name: camel-k-operator
-          image: docker.io/apache/camel-k:0.3.2-SNAPSHOT
+          image: quay.io/lburgazzoli/camel-k:latest
           command:
           - camel-k
           imagePullPolicy: IfNotPresent
@@ -6754,6 +6754,13 @@ metadata:
   name: camel-k
   labels:
     app: "camel-k"
+spec:
+  build:
+    repositories:
+    - https://repository.apache.org/content/repositories/orgapachecamel-1121@id=apache.staging
+    - https://repository.apache.org/content/repositories/snapshots@id=apache.snapshots@snapshots
+    - https://oss.sonatype.org/content/repositories/snapshots/@id=sonatype.snapshots@snapshots
+
 
 `
 	Resources["platform-integration-context-groovy.yaml"] =
