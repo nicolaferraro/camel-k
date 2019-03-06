@@ -147,7 +147,7 @@ func TestGenerateJvmProject(t *testing.T) {
 	})
 	assert.Contains(t, ctx.Project.Dependencies, maven.Dependency{
 		GroupID:    "org.apache.camel.k",
-		ArtifactID: "camel-k-adapter-camel-2",
+		ArtifactID: "camel-k-adapter-camel-3",
 	})
 }
 
@@ -212,7 +212,7 @@ func TestGenerateGroovyProject(t *testing.T) {
 	})
 	assert.Contains(t, ctx.Project.Dependencies, maven.Dependency{
 		GroupID:    "org.apache.camel.k",
-		ArtifactID: "camel-k-adapter-camel-2",
+		ArtifactID: "camel-k-adapter-camel-3",
 	})
 	assert.Contains(t, ctx.Project.Dependencies, maven.Dependency{
 		GroupID:    "org.apache.camel",

@@ -96,14 +96,10 @@ images-dev: test package-artifacts
 	operator-sdk build $(IMAGE_NAME):latest
 
 images-push:
-<<<<<<< HEAD
-	docker push $(IMAGE_NAME):$(VERSION)
-=======
- 	docker push $(IMAGE_NAME)::latest
->>>>>>> summit fixes
+	docker push $(IMAGE_NAME):latest
 
-set-version:
-	./script/set_version.sh $(VERSION)
+#set-version:
+#	./script/set_version.sh $(VERSION)
 
 #git-tag:
 #	./script/git_tag.sh $(VERSION) $(RELEASE_GIT_REMOTE)
@@ -111,8 +107,8 @@ set-version:
 #cross-compile:
 #	./script/cross_compile.sh $(VERSION)
 
-package-examples:
-	./script/package_examples.sh $(VERSION)
+#package-examples:
+#	./script/package_examples.sh $(VERSION)
 
 package-artifacts:
 	./script/package_maven_artifacts.sh $(RUNTIME_VERSION)
@@ -120,11 +116,7 @@ package-artifacts:
 #publish-base-images:
 #	go run cmd/util/publisher/publisher.go --runtime-version=$(RUNTIME_VERSION)
 
-<<<<<<< HEAD
-release: clean codegen set-version build-resources build images images-push cross-compile package-examples git-tag
-=======
-#release: clean build images images-push cross-compile package-examples git-tag
->>>>>>> summit fixes
+#release: clean codegen set-version build-resources build images images-push cross-compile package-examples git-tag
 
 #install-minishift:
 #	./script/install_minishift.sh
