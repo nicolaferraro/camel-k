@@ -5,7 +5,7 @@ CAMEL_VERSION := 3.0.0-M1
 CAMEL_VERSION_CONSTRAINT := 3.0.0-M1
 BASE_IMAGE := fabric8/s2i-java:3.0-java8
 LOCAL_REPOSITORY := /tmp/artifacts/m2
-IMAGE_NAME := quay.io/lburgazzoli/camel-k
+IMAGE_NAME := quay.io/redhatdemo/camel-k
 RELEASE_GIT_REMOTE := upstream
 
 default: test

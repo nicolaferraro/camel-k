@@ -5237,6 +5237,12 @@ spec:
       dependencies:
       - groupId: org.apache.camel
         artifactId: camel-groovy
+    camel-k-runtime-health:
+      groupId: org.apache.camel.k
+      artifactId: camel-k-runtime-health
+      dependencies:
+      - groupId: org.apache.camel
+        artifactId: camel-netty4-http
     camel-k-runtime-jvm:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-jvm
@@ -5250,6 +5256,9 @@ spec:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-kotlin
       version: 1.0.0
+    camel-k-runtime-yaml:
+      groupId: org.apache.camel.k
+      artifactId: camel-k-runtime-yaml
     camel-kafka:
       groupId: org.apache.camel
       artifactId: camel-kafka
@@ -6375,7 +6384,7 @@ spec:
       serviceAccountName: camel-k-operator
       containers:
         - name: camel-k-operator
-          image: quay.io/lburgazzoli/camel-k:latest
+          image: quay.io/redhatdemo/camel-k:latest
           command:
           - camel-k
           imagePullPolicy: IfNotPresent
@@ -6435,7 +6444,7 @@ spec:
       serviceAccountName: camel-k-operator
       containers:
         - name: camel-k-operator
-          image: quay.io/lburgazzoli/camel-k:latest
+          image: quay.io/redhatdemo/camel-k:latest
           command:
           - camel-k
           imagePullPolicy: IfNotPresent

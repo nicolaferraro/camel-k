@@ -21,7 +21,7 @@ spec:
       serviceAccountName: camel-k-operator
       containers:
         - name: camel-k-operator
-          image: quay.io/lburgazzoli/camel-k:latest
+          image: quay.io/redhatdemo/camel-k:latest
           command:
           - camel-k
           imagePullPolicy: IfNotPresent
