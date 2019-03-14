@@ -6766,9 +6766,10 @@ metadata:
 spec:
   build:
     repositories:
-    - https://repository.apache.org/content/repositories/orgapachecamel-1121@id=apache.staging
-    - https://repository.apache.org/content/repositories/snapshots@id=apache.snapshots@snapshots
-    - https://oss.sonatype.org/content/repositories/snapshots/@id=sonatype.snapshots@snapshots
+    - https://repository.apache.org/content/repositories/snapshots@id=apache.snapshots@snapshots@noreleases
+    - https://oss.sonatype.org/content/repositories/snapshots/@id=sonatype.snapshots@snapshots@noreleases
+    - https://maven.repository.redhat.com/ga@id=redhat.ga
+    - https://origin-repository.jboss.org/nexus/content/groups/ea@id=redhat.ea
 
 
 `

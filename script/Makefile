@@ -63,7 +63,7 @@ build-resources:
 	./script/build_catalog.sh 2.23.0 $(RUNTIME_VERSION)
 	./script/build_catalog.sh 3.0.0-M1 $(RUNTIME_VERSION)
 	./script/embed_resources.sh deploy
-	go run cmd/util/json-schema-gen/jsonschemagen.go --out=./assets/json-schema
+	#go run cmd/util/json-schema-gen/jsonschemagen.go --out=./assets/json-schema
 
 build-compile-integration-tests:
 	go test -c -tags=integration ./test/*.go
