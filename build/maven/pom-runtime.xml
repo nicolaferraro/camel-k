@@ -98,6 +98,52 @@
             <artifactId>camel-k-adapter-camel-3</artifactId>
             <version>${runtime.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.apache.camel.k</groupId>
+            <artifactId>camel-k-runtime-health</artifactId>
+            <version>${runtime.version}</version>
+        </dependency>
+        <!-- Syndesis -->
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-timer</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-log</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-api-provider</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-http</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-telegram</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-knative</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-webhook</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>io.syndesis.integration</groupId>
+            <artifactId>integration-runtime-camelk</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <repositories>
