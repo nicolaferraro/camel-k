@@ -9,7 +9,7 @@ const (
 	Version = "0.3.2-SNAPSHOT"
 
 	// CamelVersionConstraint --
-	CamelVersionConstraint = "3.0.0-M1"
+	CamelVersionConstraint = "~2.23.x"
 
 	// RuntimeVersion --
 	RuntimeVersion = "0.3.2-SNAPSHOT"
