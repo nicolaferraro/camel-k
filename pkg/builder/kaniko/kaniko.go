@@ -26,7 +26,7 @@ var DefaultSteps = []builder.Step{
 	builder.NewStep("project/generate", builder.ProjectGenerationPhase, builder.GenerateProject),
 	builder.NewStep("project/inject-dependencies", builder.ProjectGenerationPhase+1, builder.InjectDependencies),
 	builder.NewStep("project/sanitize-dependencies", builder.ProjectGenerationPhase+2, builder.SanitizeDependencies),
-	builder.NewStep("build/compute-dependencies", builder.ProjectBuildPhase, builder.ComputeDependencies),
+	//builder.NewStep("build/compute-dependencies", builder.ProjectBuildPhase, builder.ComputeDependencies),
 	builder.NewStep("packager/incremental", builder.ApplicationPackagePhase, builder.IncrementalPackager),
 	builder.NewStep("publisher/kaniko", builder.ApplicationPublishPhase, Publisher),
 }

@@ -18,6 +18,7 @@ limitations under the License.
 package trait
 
 import (
+	"github.com/apache/camel-k/pkg/builder/quarkus"
 	"regexp"
 
 	"github.com/apache/camel-k/pkg/apis/camel/v1alpha1"
@@ -69,6 +70,7 @@ func (t *builderTrait) Apply(e *Environment) error {
 			e.Steps = kaniko.DefaultSteps
 			e.BuildDir = kaniko.BuildDir
 		}
+		e.Steps = append(e.Steps, quarkus.DefaultSteps...)
 	}
 
 	if e.InPhase(v1alpha1.IntegrationContextPhaseReady, v1alpha1.IntegrationPhaseBuildImageSubmitted) {

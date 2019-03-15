@@ -88,13 +88,13 @@ type Plugin struct {
 	ArtifactID   string       `xml:"artifactId"`
 	Version      string       `xml:"version,omitempty"`
 	Executions   []Execution  `xml:"executions>execution,omitempty"`
-	Dependencies []Dependency `xml:"dependencies>dependency,omitempty"`
+	Dependencies *[]Dependency `xml:"dependencies>dependency,omitempty"`
 }
 
 // Execution --
 type Execution struct {
-	ID    string   `xml:"id"`
-	Phase string   `xml:"phase"`
+	ID    string   `xml:"id,omitempty"`
+	Phase string   `xml:"phase,omitempty"`
 	Goals []string `xml:"goals>goal,omitempty"`
 }
 

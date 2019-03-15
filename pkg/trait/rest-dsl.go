@@ -231,7 +231,7 @@ func (t *restDslTrait) generateProject(e *Environment) (maven.Project, error) {
 							},
 						},
 					},
-					Dependencies: []maven.Dependency{
+					Dependencies: &[]maven.Dependency{
 						{
 							GroupID:    "org.apache.camel",
 							ArtifactID: "camel-swagger-rest-dsl-generator",
