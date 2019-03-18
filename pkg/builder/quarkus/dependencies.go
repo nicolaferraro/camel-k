@@ -63,6 +63,12 @@ func InjectDependencies(ctx *builder.Context) error {
 			Version:    ctx.Request.RuntimeVersion,
 			Scope:      "runtime",
 		},
+		maven.Dependency{
+			GroupID:    "org.apache.camel.k",
+			ArtifactID: "camel-k-runtime-quarkus",
+			Version:    ctx.Request.RuntimeVersion,
+			Scope:      "runtime",
+		},
 	)
 
 	// Add Quarkus plugin
