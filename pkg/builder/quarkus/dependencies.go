@@ -47,10 +47,6 @@ func InjectDependencies(ctx *builder.Context) error {
 			GroupID:    "io.quarkus",
 			ArtifactID: "quarkus-arc",
 		},
-		//maven.Dependency{
-		//	GroupID:    "io.quarkus",
-		//	ArtifactID: "quarkus-camel-core",
-		//},
 		maven.Dependency{
 			GroupID:    "org.apache.camel.k",
 			ArtifactID: "camel-k-quarkus-deployment",
@@ -116,11 +112,6 @@ func ComputeDependencies(ctx *builder.Context) error {
 		groupId := file[:s[2]-1]
 		artifactId := file[s[2]:s[3]]
 		version := file[s[4]:s[5]]
-
-		// FIXME: exclude log4j-slf4j-impl properly
-		if artifactId == "log4j-slf4j-impl" {
-			continue
-		}
 
 		ctx.Artifacts = append(ctx.Artifacts, v1alpha1.Artifact{
 			ID:       groupId + ":" + artifactId + ":" + version,
