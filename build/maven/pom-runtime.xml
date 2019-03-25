@@ -83,11 +83,13 @@
             <artifactId>camel-k-adapter-camel-2</artifactId>
             <version>${runtime.version}</version>
         </dependency>
+        <!--
         <dependency>
             <groupId>org.apache.camel.k</groupId>
             <artifactId>camel-k-adapter-camel-3</artifactId>
             <version>${runtime.version}</version>
         </dependency>
+        -->
         <dependency>
             <groupId>org.apache.camel.k</groupId>
             <artifactId>camel-k-runtime-health</artifactId>
@@ -136,6 +138,12 @@
         </dependency>
         <!-- Syndesis -->
         <dependency>
+            <groupId>io.syndesis.integration</groupId>
+            <artifactId>integration-runtime-camelk</artifactId>
+            <version>1.7-SNAPSHOT</version>
+        </dependency>
+        <!-- Syndesis Connectors-->
+        <dependency>
             <groupId>io.syndesis.connector</groupId>
             <artifactId>connector-timer</artifactId>
             <version>1.7-SNAPSHOT</version>
@@ -171,8 +179,8 @@
             <version>1.7-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>io.syndesis.integration</groupId>
-            <artifactId>integration-runtime-camelk</artifactId>
+            <groupId>io.syndesis.connector</groupId>
+            <artifactId>connector-salesforce</artifactId>
             <version>1.7-SNAPSHOT</version>
         </dependency>
     </dependencies>
@@ -239,5 +247,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>
