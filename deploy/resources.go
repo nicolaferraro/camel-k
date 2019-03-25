@@ -3250,16 +3250,6 @@ spec:
     camel-k-runtime-kotlin:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-kotlin
-    camel-k-runtime-quarkus:
-      groupId: org.apache.camel.k
-      artifactId: camel-k-runtime-quarkus
-      dependencies:
-      - groupId: org.apache.camel.k
-        artifactId: camel-k-quarkus-runtime
-      - groupId: org.apache.camel.k
-        artifactId: camel-k-quarkus-deployment
-      - groupId: io.quarkus
-        artifactId: quarkus-arc
     camel-k-runtime-yaml:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-yaml
@@ -5266,16 +5256,6 @@ spec:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-kotlin
       version: 1.0.0
-    camel-k-runtime-quarkus:
-      groupId: org.apache.camel.k
-      artifactId: camel-k-runtime-quarkus
-      dependencies:
-      - groupId: org.apache.camel.k
-        artifactId: camel-k-quarkus-runtime
-      - groupId: org.apache.camel.k
-        artifactId: camel-k-quarkus-deployment
-      - groupId: io.quarkus
-        artifactId: quarkus-arc
     camel-k-runtime-yaml:
       groupId: org.apache.camel.k
       artifactId: camel-k-runtime-yaml
