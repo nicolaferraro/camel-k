@@ -15,7 +15,7 @@ const (
 	RuntimeVersion = "0.3.2-summit"
 
 	// BaseImage --
-	BaseImage = "fabric8/s2i-java:3.0-java8"
+	BaseImage = "quay.io/redhatdemo/camel-k-syndesis-base:latest"
 
 	// LocalRepository --
 	LocalRepository = "/tmp/artifacts/m2"
