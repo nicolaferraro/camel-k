@@ -26,7 +26,7 @@ import (
 
 	"github.com/stretchr/testify/assert"
 
-	serving "github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	serving "github.com/knative/serving/pkg/apis/serving/v1beta1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -75,7 +75,7 @@ func TestIstioInject(t *testing.T) {
 	s := serving.Service{
 		Spec: serving.ServiceSpec{
 			ConfigurationSpec: serving.ConfigurationSpec{
-				Template: &serving.RevisionTemplateSpec{},
+				Template: serving.RevisionTemplateSpec{},
 			},
 		},
 	}
@@ -89,7 +89,7 @@ func TestIstioInject(t *testing.T) {
 	err := env.Catalog.apply(&env)
 	assert.Nil(t, err)
 
-	assert.Empty(t, s.Spec.ConfigurationSpec.GetTemplate().Annotations[istioSidecarInjectAnnotation])
+	assert.Empty(t, s.Spec.ConfigurationSpec.Template.Annotations[istioSidecarInjectAnnotation])
 	assert.NotEmpty(t, d.Spec.Template.Annotations[istioSidecarInjectAnnotation])
 }
 
@@ -97,7 +97,7 @@ func TestIstioForcedInjectTrue(t *testing.T) {
 	s := serving.Service{
 		Spec: serving.ServiceSpec{
 			ConfigurationSpec: serving.ConfigurationSpec{
-				Template: &serving.RevisionTemplateSpec{},
+				Template: serving.RevisionTemplateSpec{},
 			},
 		},
 	}
@@ -113,7 +113,7 @@ func TestIstioForcedInjectTrue(t *testing.T) {
 	err := env.Catalog.apply(&env)
 	assert.Nil(t, err)
 
-	assert.Equal(t, "true", s.Spec.ConfigurationSpec.GetTemplate().Annotations[istioSidecarInjectAnnotation])
+	assert.Equal(t, "true", s.Spec.ConfigurationSpec.Template.Annotations[istioSidecarInjectAnnotation])
 	assert.Equal(t, "true", d.Spec.Template.Annotations[istioSidecarInjectAnnotation])
 }
 
@@ -121,7 +121,7 @@ func TestIstioForcedInjectFalse(t *testing.T) {
 	s := serving.Service{
 		Spec: serving.ServiceSpec{
 			ConfigurationSpec: serving.ConfigurationSpec{
-				Template: &serving.RevisionTemplateSpec{},
+				Template: serving.RevisionTemplateSpec{},
 			},
 		},
 	}
@@ -137,7 +137,7 @@ func TestIstioForcedInjectFalse(t *testing.T) {
 	err := env.Catalog.apply(&env)
 	assert.Nil(t, err)
 
-	assert.Equal(t, "false", s.Spec.ConfigurationSpec.GetTemplate().Annotations[istioSidecarInjectAnnotation])
+	assert.Equal(t, "false", s.Spec.ConfigurationSpec.Template.Annotations[istioSidecarInjectAnnotation])
 	assert.Equal(t, "false", d.Spec.Template.Annotations[istioSidecarInjectAnnotation])
 }
 
@@ -145,7 +145,7 @@ func TestIstioDisabled(t *testing.T) {
 	s := serving.Service{
 		Spec: serving.ServiceSpec{
 			ConfigurationSpec: serving.ConfigurationSpec{
-				Template: &serving.RevisionTemplateSpec{},
+				Template: serving.RevisionTemplateSpec{},
 			},
 		},
 	}

@@ -30,7 +30,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	serving "github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	serving "github.com/knative/serving/pkg/apis/serving/v1beta1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	k8sclient "sigs.k8s.io/controller-runtime/pkg/client"
@@ -109,8 +109,8 @@ func (t *classpathTrait) Apply(e *Environment) error {
 			}
 		})
 		e.Resources.VisitKnativeService(func(service *serving.Service) {
-			for ci := range service.Spec.ConfigurationSpec.GetTemplate().Spec.Containers {
-				c := &service.Spec.ConfigurationSpec.GetTemplate().Spec.Containers[ci]
+			for ci := range service.Spec.ConfigurationSpec.Template.Spec.Containers {
+				c := &service.Spec.ConfigurationSpec.Template.Spec.Containers[ci]
 				for mi := range c.VolumeMounts {
 					m := &c.VolumeMounts[mi]
 					e.Classpath.Add(m.MountPath)

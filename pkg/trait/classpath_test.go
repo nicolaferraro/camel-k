@@ -21,7 +21,7 @@ import (
 	"context"
 	"testing"
 
-	serving "github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	serving "github.com/knative/serving/pkg/apis/serving/v1beta1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -140,7 +140,7 @@ func TestConfigureClasspathTraitWithKNativeResource(t *testing.T) {
 	}
 
 	s := serving.Service{}
-	s.Spec.ConfigurationSpec.Template = &serving.RevisionTemplateSpec{}
+	s.Spec.ConfigurationSpec.Template = serving.RevisionTemplateSpec{}
 	s.Spec.ConfigurationSpec.Template.Spec.Containers = []corev1.Container{
 		{
 			VolumeMounts: []corev1.VolumeMount{

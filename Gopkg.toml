@@ -13,19 +13,19 @@ required = [
 # Align K8S resources to operator-sdk
 [[override]]
   name = "k8s.io/api"
-  version = "kubernetes-1.13.1"
+  version = "kubernetes-1.13.4"
 
 [[override]]
   name = "k8s.io/apimachinery"
-  version = "kubernetes-1.13.1"
+  version = "kubernetes-1.13.4"
 
 [[override]]
   name = "k8s.io/code-generator"
-  version = "kubernetes-1.13.1"
+  version = "kubernetes-1.13.4"
 
 [[override]]
   name = "k8s.io/client-go"
-  version = "kubernetes-1.13.1"
+  version = "kubernetes-1.13.4"
 
 # Align controller-runtime to operator-sdk
 [[override]]
@@ -41,15 +41,23 @@ required = [
   name = "github.com/operator-framework/operator-sdk"
   # The version rule is used for a specific release and the master branch for in between releases.
   # branch = "master" #osdk_branch_annotation
-  version = "=v0.8.0" #osdk_version_annotation
+  version = "=v0.9.0" #osdk_version_annotation
 
 [[constraint]]
   name = "github.com/coreos/prometheus-operator"
-  version = "0.27.0"
+  version = "0.28.0"
 
 [[constraint]]
   name = "github.com/knative/eventing"
-  version = "0.4.0"
+  version = "0.7.1"
+
+[[constraint]]
+  name = "github.com/knative/serving"
+  version = "0.7.1"
+
+[[constraint]]
+  name = "github.com/knative/pkg"
+  branch = "release-0.7"
 
 [prune]
   go-tests = true

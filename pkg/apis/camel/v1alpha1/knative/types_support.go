@@ -19,16 +19,47 @@ package knative
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/url"
 	"strconv"
+
+	"github.com/knative/pkg/apis/duck/v1alpha1"
+	"github.com/knative/serving/pkg/apis/serving/v1beta1"
 )
 
-// BuildCamelServiceDefinition creates a CamelServiceDefinition from a given URL
-func BuildCamelServiceDefinition(name string, serviceType CamelServiceType, rawurl string) (*CamelServiceDefinition, error) {
-	serviceURL, err := url.Parse(rawurl)
-	if err != nil {
-		return nil, err
+// BuildCamelServiceDefinitionFromServiceStatus creates a CamelServiceDefinition from a Knative ServiceStatus
+func BuildCamelServiceDefinitionFromServiceStatus(name string, serviceType CamelServiceType, status v1beta1.ServiceStatus) (CamelServiceDefinition, error) {
+	// build it using the Route URL information if available
+	if status.URL != nil && status.URL.Host != "" {
+		return BuildCamelServiceDefinition(name, serviceType, url.URL(*status.URL))
 	}
+	// fallback to using the address.URL
+	if status.Address != nil && status.Address.URL != nil && status.Address.URL.Host != "" {
+		return BuildCamelServiceDefinition(name, serviceType, url.URL(*status.Address.URL))
+	}
+	return CamelServiceDefinition{}, errors.New("cannot determine service hostname")
+}
+
+// BuildCamelServiceDefinitionFromAddressable creates a CamelServiceDefinition from a Knative Addressable
+func BuildCamelServiceDefinitionFromAddressable(name string, serviceType CamelServiceType, addressable v1alpha1.Addressable) (CamelServiceDefinition, error) {
+	// build it using the URL information if available
+	if addressable.URL != nil && addressable.URL.Host != "" {
+		return BuildCamelServiceDefinition(name, serviceType, url.URL(*addressable.URL))
+	}
+	// fallback to using hostname
+	if addressable.Hostname == "" {
+		return CamelServiceDefinition{}, errors.New("cannot determine addressable hostname")
+	}
+	serviceURL, err := url.Parse(fmt.Sprintf("http://%s", addressable.Hostname))
+	if err != nil {
+		return CamelServiceDefinition{}, err
+	}
+	return BuildCamelServiceDefinition(name, serviceType, *serviceURL)
+}
+
+// BuildCamelServiceDefinition creates a CamelServiceDefinition from a given URL
+func BuildCamelServiceDefinition(name string, serviceType CamelServiceType, serviceURL url.URL) (CamelServiceDefinition, error) {
 	protocol := CamelProtocol(serviceURL.Scheme)
 	definition := CamelServiceDefinition{
 		Name:        name,
@@ -42,7 +73,7 @@ func BuildCamelServiceDefinition(name string, serviceType CamelServiceType, rawu
 	if portStr != "" {
 		port, err := strconv.Atoi(portStr)
 		if err != nil {
-			return nil, err
+			return CamelServiceDefinition{}, err
 		}
 		definition.Port = port
 	}
@@ -52,7 +83,7 @@ func BuildCamelServiceDefinition(name string, serviceType CamelServiceType, rawu
 	} else {
 		definition.Metadata[CamelMetaServicePath] = "/"
 	}
-	return &definition, nil
+	return definition, nil
 }
 
 func defaultCamelProtocolPort(prot CamelProtocol) int {

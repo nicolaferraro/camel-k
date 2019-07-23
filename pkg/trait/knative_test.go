@@ -22,7 +22,7 @@ import (
 	"testing"
 
 	"github.com/apache/camel-k/pkg/util/envvar"
-
+	pkgapis "github.com/knative/pkg/apis"
 	"k8s.io/apimachinery/pkg/runtime"
 
 	"github.com/apache/camel-k/pkg/apis"
@@ -41,7 +41,8 @@ import (
 	k8sutils "github.com/apache/camel-k/pkg/util/kubernetes"
 	eventing "github.com/knative/eventing/pkg/apis/eventing/v1alpha1"
 	duckv1alpha1 "github.com/knative/pkg/apis/duck/v1alpha1"
-	serving "github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	duckv1beta1 "github.com/knative/pkg/apis/duck/v1beta1"
+	serving "github.com/knative/serving/pkg/apis/serving/v1beta1"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	clientscheme "k8s.io/client-go/kubernetes/scheme"
@@ -137,6 +138,8 @@ func TestKnativeEnvConfiguration(t *testing.T) {
 	cSink1 := ne.FindService("channel-sink-1", knativeapi.CamelServiceTypeChannel)
 	assert.NotNil(t, cSink1)
 	assert.Equal(t, "channel-sink-1.host", cSink1.Host)
+	assert.Equal(t, 80, cSink1.Port)
+	assert.Equal(t, knativeapi.CamelProtocolHTTP, cSink1.Protocol)
 
 	eSource1 := ne.FindService("endpoint-source-1", knativeapi.CamelServiceTypeEndpoint)
 	assert.NotNil(t, eSource1)
@@ -148,6 +151,8 @@ func TestKnativeEnvConfiguration(t *testing.T) {
 	eSink2 := ne.FindService("endpoint-sink-2", knativeapi.CamelServiceTypeEndpoint)
 	assert.NotNil(t, eSink2)
 	assert.Equal(t, "endpoint-sink-2.host", eSink2.Host)
+	assert.Equal(t, 443, eSink2.Port)
+	assert.Equal(t, knativeapi.CamelProtocolHTTPS, eSink2.Protocol)
 
 }
 
@@ -165,6 +170,15 @@ func NewFakeClient(namespace string) (controller.Client, error) {
 
 	// Setup Scheme for all resources
 	if err := apis.AddToScheme(scheme); err != nil {
+		return nil, err
+	}
+
+	myURL, err := pkgapis.ParseURL("http://endpoint-sink-1.host")
+	if err != nil {
+		return nil, err
+	}
+	myURL2, err := pkgapis.ParseURL("https://endpoint-sink-2.host")
+	if err != nil {
 		return nil, err
 	}
 
@@ -196,8 +210,8 @@ func NewFakeClient(namespace string) (controller.Client, error) {
 			},
 			Status: serving.ServiceStatus{
 				RouteStatusFields: serving.RouteStatusFields{
-					Address: &duckv1alpha1.Addressable{
-						Hostname: "endpoint-sink-1.host",
+					Address: &duckv1beta1.Addressable{
+						URL: myURL,
 					},
 				},
 			},
@@ -212,10 +226,9 @@ func NewFakeClient(namespace string) (controller.Client, error) {
 				Name:      "endpoint-sink-2",
 			},
 			Status: serving.ServiceStatus{
+
 				RouteStatusFields: serving.RouteStatusFields{
-					Address: &duckv1alpha1.Addressable{
-						Hostname: "endpoint-sink-2.host",
-					},
+					URL: myURL2,
 				},
 			},
 		},

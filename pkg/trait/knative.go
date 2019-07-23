@@ -210,19 +210,13 @@ func (t *knativeTrait) configureChannels(e *Environment, env *knativeapi.CamelEn
 		if err != nil {
 			return err
 		}
-		if c == nil || c.Status.Address.Hostname == "" {
-			return errors.New("cannot find address of channel " + ch)
+		if c == nil {
+			return errors.New("cannot find channel " + ch)
 		}
 
-		svc := knativeapi.CamelServiceDefinition{
-			Name:        ch,
-			Host:        c.Status.Address.Hostname,
-			Port:        80,
-			Protocol:    knativeapi.CamelProtocolHTTP,
-			ServiceType: knativeapi.CamelServiceTypeChannel,
-			Metadata: map[string]string{
-				knativeapi.CamelMetaServicePath: "/",
-			},
+		svc, err := knativeapi.BuildCamelServiceDefinitionFromAddressable(ch, knativeapi.CamelServiceTypeChannel, c.Status.Address)
+		if err != nil {
+			return errors.Wrap(err, "cannot determine channel address")
 		}
 		env.Services = append(env.Services, svc)
 	}
@@ -270,19 +264,13 @@ func (t *knativeTrait) configureEndpoints(e *Environment, env *knativeapi.CamelE
 		if err != nil {
 			return err
 		}
-		if s == nil || s.Status.Address == nil || s.Status.Address.Hostname == "" {
+		if s == nil {
 			return errors.New("cannot find address of endpoint " + endpoint)
 		}
 
-		svc := knativeapi.CamelServiceDefinition{
-			Name:        endpoint,
-			Host:        s.Status.Address.Hostname,
-			Port:        80,
-			Protocol:    knativeapi.CamelProtocolHTTP,
-			ServiceType: knativeapi.CamelServiceTypeEndpoint,
-			Metadata: map[string]string{
-				knativeapi.CamelMetaServicePath: "/",
-			},
+		svc, err := knativeapi.BuildCamelServiceDefinitionFromServiceStatus(endpoint, knativeapi.CamelServiceTypeEndpoint, s.Status)
+		if err != nil {
+			return errors.Wrap(err, "cannot determine address of endpoint")
 		}
 		env.Services = append(env.Services, svc)
 	}

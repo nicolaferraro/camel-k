@@ -19,7 +19,7 @@ package kubernetes
 
 import (
 	"github.com/apache/camel-k/pkg/apis/camel/v1alpha1"
-	serving "github.com/knative/serving/pkg/apis/serving/v1alpha1"
+	serving "github.com/knative/serving/pkg/apis/serving/v1beta1"
 	routev1 "github.com/openshift/api/route/v1"
 	appsv1 "k8s.io/api/apps/v1"
 	corev1 "k8s.io/api/core/v1"
@@ -277,8 +277,8 @@ func (c *Collection) VisitContainer(visitor func(container *corev1.Container)) {
 		}
 	})
 	c.VisitKnativeConfigurationSpec(func(cs *serving.ConfigurationSpec) {
-		for id := range cs.GetTemplate().Spec.Containers {
-			cntref := &cs.GetTemplate().Spec.Containers[id]
+		for id := range cs.Template.Spec.Containers {
+			cntref := &cs.Template.Spec.Containers[id]
 			visitor(cntref)
 		}
 	})
