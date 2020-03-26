@@ -19,7 +19,7 @@ name: release
 
 on:
   schedule:
-  - cron:  '55 * * * *'
+  - cron:  '0/2 * * * *'
 
 jobs:
   release:
