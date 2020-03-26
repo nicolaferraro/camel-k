@@ -22,7 +22,7 @@ on:
   - cron:  '0/5 * * * *'
   push:
     branches:
-      - master
+    - master
 jobs:
   release:
     runs-on: ubuntu-latest
