@@ -22,10 +22,12 @@ on:
   - cron:  '0/5 * * * *'
   push:
     branches:
+    # needs this for the cron to work, but releasing on push is disabled later
     - master
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.event_name != 'push'
     steps:
     - name: Install Go
       uses: actions/setup-go@v1
