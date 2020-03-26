@@ -25,9 +25,16 @@ on:
     # needs this for the cron to work, but releasing on push is disabled later
     - master
 jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Prepare release
+      run: echo "Preparing release..."
+
   release:
     runs-on: ubuntu-latest
-    #if: github.event_name != 'push'
+    needs: prepare
+    if: github.event_name != 'push'
     steps:
     - name: Install Go
       uses: actions/setup-go@v1
