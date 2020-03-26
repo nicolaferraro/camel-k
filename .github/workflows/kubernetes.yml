@@ -41,6 +41,7 @@ jobs:
     - name: Info
       run: |
         ls -lart
+        echo ---$GITHUB_REF---
     - name: Set Up Java
       uses: actions/setup-java@v1
       with:
