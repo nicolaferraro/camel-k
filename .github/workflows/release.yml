@@ -19,8 +19,10 @@ name: release
 
 on:
   schedule:
-  - cron:  '0 0 * * *'
-
+  - cron:  '0/5 * * * *'
+  push:
+    branches:
+      - master
 jobs:
   release:
     runs-on: ubuntu-latest
@@ -69,6 +71,11 @@ jobs:
 
         docker login -u $TEST_DOCKER_HUB_USERNAME -p $TEST_DOCKER_HUB_PASSWORD
 
+    - name: XX
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        env
     - name: Codegen
       run: |
         make VERSION=$VERSION IMAGE_NAME=$IMAGE_NAME codegen set-version build-resources
