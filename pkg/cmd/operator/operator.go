@@ -138,6 +138,13 @@ func Run() {
 		os.Exit(1)
 	}
 
+	// Try to register the OpenShift CLI Download link if possible
+	installCtx, _ := context.WithTimeout(context.TODO(), 30 * time.Second)
+	if err := install.OpenShiftConsoleDownloadLink(installCtx, c); err != nil {
+		log.Info("Cannot install OpenShift CLI download link: skipping.")
+		log.V(8).Info("Error while installing OpenShift CLI download link", "error", err)
+	}
+
 	log.Info("Registering Components.")
 
 	// Setup Scheme for all resources
